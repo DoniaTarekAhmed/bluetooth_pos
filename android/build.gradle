@@ -1,9 +1,15 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
 android {
-    namespace "com.example.bluetooth_pos"
-    compileSdkVersion 33
+    // هذا يجب أن يطابق الـ package في الـ manifest
+    namespace "com.ayeee.blue_print_pos"
+    compileSdk 33
 
     defaultConfig {
-        minSdkVersion 19
+        minSdk 19
     }
 
     sourceSets {
