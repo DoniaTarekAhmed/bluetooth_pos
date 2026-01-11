@@ -3,7 +3,7 @@ import 'dart:io';
 // import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:blue_thermal_printer/blue_thermal_printer.dart' as blue_thermal;
+// import 'package:blue_thermal_printer/blue_thermal_printer.dart' as blue_thermal;
 import 'package:bluetooth_pos/models/blue_device.dart';
 import 'package:bluetooth_pos/models/connection_status.dart';
 import 'package:bluetooth_pos/receipt/receipt_section_text.dart';
@@ -17,7 +17,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 class BluePrintPos {
   BluePrintPos._() {
-    _bluetoothAndroid = blue_thermal.BlueThermalPrinter.instance;
+    // _bluetoothAndroid = blue_thermal.BlueThermalPrinter.instance;
     // _bluetoothIOS = flutter_blue.FlutterBluePlus.instance;
   }
 
@@ -26,7 +26,7 @@ class BluePrintPos {
   static const MethodChannel _channel = MethodChannel('blue_print_pos');
 
   /// This field is library to handle in Android Platform
-  blue_thermal.BlueThermalPrinter? _bluetoothAndroid;
+  // blue_thermal.BlueThermalPrinter? _bluetoothAndroid;
 
   /// This field is library to handle in iOS Platform
   // flutter_blue.FlutterBluePlus? _bluetoothIOS;
@@ -58,12 +58,12 @@ class BluePrintPos {
   }) async {
     selectedDevice = device;
     try {
-      if (Platform.isAndroid) {
-        final blue_thermal.BluetoothDevice bluetoothDeviceAndroid =
-            blue_thermal.BluetoothDevice(
-                selectedDevice?.name ?? '', selectedDevice?.address ?? '');
-        await _bluetoothAndroid?.connect(bluetoothDeviceAndroid);
-      }
+      // if (Platform.isAndroid) {
+      //   final blue_thermal.BluetoothDevice bluetoothDeviceAndroid =
+      //       blue_thermal.BluetoothDevice(
+      //           selectedDevice?.name ?? '', selectedDevice?.address ?? '');
+      //   await _bluetoothAndroid?.connect(bluetoothDeviceAndroid);
+      // }
       // else if (Platform.isIOS) {
       //   _bluetoothDeviceIOS = flutter_blue.BluetoothDevice.fromProto(
       //     proto.BluetoothDevice(
@@ -99,12 +99,12 @@ class BluePrintPos {
   Future<ConnectionStatus> disconnect({
     Duration timeout = const Duration(seconds: 5),
   }) async {
-    if (Platform.isAndroid) {
-      if (await _bluetoothAndroid?.isConnected ?? false) {
-        await _bluetoothAndroid?.disconnect();
-      }
-      _isConnected = false;
-    }
+    // if (Platform.isAndroid) {
+    //   if (await _bluetoothAndroid?.isConnected ?? false) {
+    //     await _bluetoothAndroid?.disconnect();
+    //   }
+    //   _isConnected = false;
+    // }
     // else if (Platform.isIOS) {
     //   await _bluetoothDeviceIOS?.disconnect();
     //   _isConnected = false;
@@ -193,9 +193,9 @@ class BluePrintPos {
       if (!_isConnected && selectedDevice != null) {
         await connect(selectedDevice!);
       }
-      if (Platform.isAndroid) {
-        _bluetoothAndroid?.writeBytes(Uint8List.fromList(byteBuffer));
-      }
+      // if (Platform.isAndroid) {
+      //   _bluetoothAndroid?.writeBytes(Uint8List.fromList(byteBuffer));
+      // }
       // else if (Platform.isIOS) {
       //   final List<flutter_blue.BluetoothService> bluetoothServices =
       //       await _bluetoothDeviceIOS?.discoverServices() ??
@@ -261,8 +261,7 @@ class BluePrintPos {
         color: const Color(0xFF000000),
         emptyColor: const Color(0xFFFFFFFF),
       ).toImage(size);
-      final ByteData? byteData =
-          await image.toByteData(format: ImageByteFormat.png);
+      final ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
       assert(byteData != null);
       return byteData!.buffer.asUint8List();
     } on Exception catch (exception) {
@@ -281,8 +280,7 @@ class BluePrintPos {
     };
     Uint8List results = Uint8List.fromList(<int>[]);
     try {
-      results = await _channel.invokeMethod('contentToImage', arguments) ??
-          Uint8List.fromList(<int>[]);
+      results = await _channel.invokeMethod('contentToImage', arguments) ?? Uint8List.fromList(<int>[]);
     } on Exception catch (e) {
       log('[method:contentToImage]: $e');
       throw Exception('Error: $e');

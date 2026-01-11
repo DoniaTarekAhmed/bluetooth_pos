@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:blue_thermal_printer/blue_thermal_printer.dart' as blue_thermal;
+// import 'package:blue_thermal_printer/blue_thermal_printer.dart' as blue_thermal;
 import 'package:bluetooth_pos/models/blue_device.dart';
 // import 'package:flutter_blue_plus/flutter_blue_plus.dart' as flutter_blue;
 
@@ -11,21 +11,21 @@ class BlueScanner {
   /// Provide list of bluetooth device, return as list of [BlueDevice]
   static Future<List<BlueDevice>> scan() async {
     List<BlueDevice> devices = <BlueDevice>[];
-    if (Platform.isAndroid) {
-      final blue_thermal.BlueThermalPrinter bluetoothAndroid =
-          blue_thermal.BlueThermalPrinter.instance;
-      final List<blue_thermal.BluetoothDevice> resultDevices =
-          await bluetoothAndroid.getBondedDevices();
-      devices = resultDevices
-          .map(
-            (blue_thermal.BluetoothDevice bluetoothDevice) => BlueDevice(
-              name: bluetoothDevice.name ?? '',
-              address: bluetoothDevice.address ?? '',
-              type: bluetoothDevice.type,
-            ),
-          )
-          .toList();
-    }
+    // if (Platform.isAndroid) {
+    //   final blue_thermal.BlueThermalPrinter bluetoothAndroid =
+    //       blue_thermal.BlueThermalPrinter.instance;
+    //   final List<blue_thermal.BluetoothDevice> resultDevices =
+    //       await bluetoothAndroid.getBondedDevices();
+    //   devices = resultDevices
+    //       .map(
+    //         (blue_thermal.BluetoothDevice bluetoothDevice) => BlueDevice(
+    //           name: bluetoothDevice.name ?? '',
+    //           address: bluetoothDevice.address ?? '',
+    //           type: bluetoothDevice.type,
+    //         ),
+    //       )
+    //       .toList();
+    // }
     // else if (Platform.isIOS) {
     //   final flutter_blue.FlutterBluePlus bluetoothIOS =
     //       flutter_blue.FlutterBluePlus.instance;
